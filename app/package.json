@@ -18,6 +18,9 @@
     "usb": "1.6.3",
     "lzo-decompress": "1.0.1"
   },
+  "resolutions": {
+    "graceful-fs": "4.2.4"
+  },
   "optionalDependencies": {
     "winreg": "1.2.4"
   }
