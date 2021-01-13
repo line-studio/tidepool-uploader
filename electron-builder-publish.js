@@ -8,7 +8,7 @@ const config = {
     buildResources: 'resources',
     output: 'release'
   },
-  afterSign: 'scripts/notarize.js',
+  // afterSign: 'scripts/notarize.js',
   dmg: {
     contents: [
       {
@@ -54,14 +54,14 @@ const config = {
       {
         target: 'nsis',
         arch: [
-          'ia32',
+          // 'ia32',
           'x64'
         ]
       },
       {
         target: 'zip',
         arch: [
-          'ia32',
+          // 'ia32',
           'x64'
         ]
       }
