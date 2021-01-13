@@ -88,10 +88,10 @@ const serverdata = {
     BLIP_URL: 'https://int-app.tidepool.org'
   },
   Production: {
-    API_URL: 'https://api.tidepool.org',
-    UPLOAD_URL: 'https://uploads.tidepool.org',
-    DATA_URL: 'https://api.tidepool.org/dataservices',
-    BLIP_URL: 'https://app.tidepool.org'
+    API_URL: config.API_URL || 'https://api.tidepool.org',
+    UPLOAD_URL: config.UPLOAD_URL ||'https://uploads.tidepool.org',
+    DATA_URL: config.DATA_URL ||'https://api.tidepool.org/dataservices',
+    BLIP_URL: config.BLIP_URL ||'https://app.tidepool.org'
   }
 };
 
