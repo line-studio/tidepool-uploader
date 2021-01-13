@@ -4,9 +4,9 @@
   "description": "Tidepool Project Universal Uploader",
   "private": true,
   "main": "main.prod.js",
-  "author": "Kent Quirk",
+  "author": "Miguel Araujo",
   "license": "BSD-2-Clause",
-  "repository": "tidepool-org/uploader",
+  "repository": "line-studio/tidepool-uploader",
   "scripts": {
     "av-whitelist": "node ./scripts/whitelisting/av-submit.js",
     "build-docs": "./scripts/update-gh-pages.sh",
