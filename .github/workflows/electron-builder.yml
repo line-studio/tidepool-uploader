@@ -1,0 +1,43 @@
+name: Build/Release
+
+on:
+  push: push
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          build_script_name: 'build-quiet'
+          args: '-c electron-builder-publish.js'
+
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    env:
+      API_URL: 'https://dev-us.tdpl.dk'
+      UPLOAD_URL: 'https://dev-us.tdpl.dk'
+      DATA_URL: 'https://dev-us.tdpl.dk/dataservices'
+      BLIP_URL: 'https://dev-us.tdpl.dk'
+      DEFAULT_TIMEZONE: 'Europe/Copenhagen'
+      DEBUG_ERROR: false
+      REDUX_LOG: false
+      REDUX_DEV_UI: false
+
