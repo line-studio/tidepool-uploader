@@ -63,7 +63,7 @@ export class MainPage extends Component {
         dismissUpdateProfileError={this.props.sync.dismissUpdateProfileError}
         isClinicAccount={this.props.isClinicAccount}
         isUploadInProgress={this.props.uploadIsInProgress}
-        onTimezoneChange={this.props.async.setTargetTimezone}
+        onTimezoneChange={(userId, opt) => this.props.async.setTargetTimezone(userId, opt.value)}
         selectorLabel={'Time zone'}
         targetId={uploadTargetUser || null}
         targetTimezone={this.props.selectedTimezone}
@@ -175,6 +175,7 @@ export class MainPage extends Component {
           toggleErrorDetails={this.props.sync.toggleErrorDetails}
           updateProfileErrorMessage={this.props.updateProfileErrorMessage}
           uploads={this.props.activeUploads}
+          onSetPage={this.props.async.setPage}
           userDropdownShowing={this.props.showingUserSelectionDropdown} />
         {viewDataLinkButton}
       </div>

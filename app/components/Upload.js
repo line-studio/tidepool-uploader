@@ -31,6 +31,7 @@ import debugMode from '../utils/debugMode';
 import uploadDataPeriod from '../utils/uploadDataPeriod';
 
 import styles from '../../styles/components/Upload.module.less';
+import { pages } from '../constants/otherConstants';
 
 const MEDTRONIC_KEYTAR_SERVICE = 'org.tidepool.uploader.medtronic.serialnumber';
 const ble = new BLE();
@@ -184,6 +185,10 @@ export default class Upload extends Component {
     const { upload } = this.props;
     if (e) {
       e.preventDefault();
+    }
+
+    if (_.get(upload, 'key', null) === "libreview") {
+      return this.props.handleSetPage(pages.LIBREVIEW_PATIENT_SELECT)
     }
 
     if (_.get(upload, 'source.type', null) === 'carelink') {

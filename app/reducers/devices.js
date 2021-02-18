@@ -2,6 +2,13 @@ import mm723Image from '../../images/MM723_CNL_combo@2x.jpg';
 import mm600Image from '../../images/MM600_CNL_combo@2x.jpg';
 
 const devices = {
+  libreview: {
+    instructions: 'Import data from Libre View site',
+    name: 'Libre View',
+    key: 'libreview',
+    source: {type: 'device', driverId: 'LibreView'},
+    enabled: {mac: true, win: true, linux: true}
+  },
   accuchekusb: {
     instructions: 'Plug in meter with micro-USB cable',
     name: 'Roche Accu-Chek Aviva Connect, Guide & Guide Me',

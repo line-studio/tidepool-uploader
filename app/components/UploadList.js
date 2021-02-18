@@ -38,6 +38,7 @@ export default class UploadList extends Component {
     userDropdownShowing: PropTypes.bool.isRequired,
     onReset: PropTypes.func.isRequired,
     onUpload: PropTypes.func.isRequired,
+    onSetPage: PropTypes.func.isRequired,
     readFile: PropTypes.func.isRequired,
     toggleErrorDetails: PropTypes.func.isRequired,
     updateProfileErrorMessage: PropTypes.string,
@@ -72,7 +73,7 @@ export default class UploadList extends Component {
       [styles.wrapNoTZ]: !this.props.timezoneIsSelected
     });
 
-    const { disabled, onReset, onUpload, targetId } = this.props;
+    const { disabled, onReset, onUpload, onSetPage, targetId } = this.props;
 
     const headlineText = this.props.isClinicAccount ? 'Devices' : 'Upload Devices';
     const medtronicEnabled = _.findIndex(this.props.uploads, {key:'medtronic'}) === -1 ? false : true;
@@ -91,6 +92,7 @@ export default class UploadList extends Component {
               targetId={targetId}
               addDevice={this.props.addDevice}
               removeDevice={this.props.removeDevice}
+              handleSetPage={onSetPage}
               onDone={this.props.onDone}
               onReset={onReset.bind(null, targetId, upload.key)}
               onUpload={onUpload.bind(null, upload.key)}

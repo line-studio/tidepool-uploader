@@ -22,7 +22,9 @@ export const pages = {
   NO_UPLOAD_TARGETS: 'NO_UPLOAD_TARGETS',
   SETTINGS: 'SETTINGS',
   CLINIC_USER_SELECT: 'CLINIC_USER_SELECT',
-  CLINIC_USER_EDIT: 'CLINIC_USER_EDIT'
+  CLINIC_USER_EDIT: 'CLINIC_USER_EDIT',
+  LIBREVIEW_PATIENT_SELECT: 'LIBREVIEW_PATIENT_SELECT',
+  LIBREVIEW_PATIENT_DATA_SCRAPE: 'LIBREVIEW_PATIENT_DATA_SCRAPE'
 };
 
 export const pagesMap = {
@@ -32,7 +34,9 @@ export const pagesMap = {
   NO_UPLOAD_TARGETS: '/no_upload_targets',
   SETTINGS: '/settings',
   CLINIC_USER_SELECT: '/clinic_user_select',
-  CLINIC_USER_EDIT: '/clinic_user_edit'
+  CLINIC_USER_EDIT: '/clinic_user_edit',
+  LIBREVIEW_PATIENT_SELECT: '/libreview_patient_select',
+  LIBREVIEW_PATIENT_DATA_SCRAPE: '/libreview_patient_data_scrape'
 };
 
 export const paths = {

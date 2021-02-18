@@ -1,0 +1,42 @@
+.mainContainer {
+  width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contentWrapper {
+  composes: whiteBox from '../core/layout.module.less';
+  composes: centerContainer from '../core/layout.module.less';
+  padding: 1em 2em;
+  min-height: 500px;
+  justify-content: start;
+}
+
+.buttonsContainer {
+    composes: spaceBetweenButtonsContainer from '../core/buttons.module.less';
+}
+
+.doneButton {
+  composes: btn btnPrimary from '../core/buttons.module.less';
+}
+
+.backButton {
+  composes: backButton from '../core/buttons.module.less';
+}
+
+.header {
+  composes: large from '../core/typography.module.less';
+}
+
+.loadingSpinnerInline {
+    margin-left: 0.5em;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}

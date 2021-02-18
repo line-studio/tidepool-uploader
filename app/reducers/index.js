@@ -22,6 +22,7 @@ import { reducer as formReducer } from 'redux-form';
 import * as misc from './misc';
 import * as uploads from './uploads';
 import * as users from './users';
+import * as libreView from './libreView';
 
 const rootReducer = function(history) {
   return combineReducers(
@@ -29,6 +30,7 @@ const rootReducer = function(history) {
       misc,
       uploads,
       users,
+      libreView,
       { form: formReducer },
       { router: connectRouter(history) },
     )

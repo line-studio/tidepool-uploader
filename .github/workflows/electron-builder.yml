@@ -38,4 +38,5 @@ jobs:
       DEBUG_ERROR: false
       REDUX_LOG: false
       REDUX_DEV_UI: false
+      GHP_TOKEN: ${{secrets.GHP_TOKEN}}
 

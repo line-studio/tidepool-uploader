@@ -1,0 +1,15 @@
+#app {
+  opacity: 0;
+}
+
+#modal-root {
+  background: #fafafa;
+}
+
+.modal-content {
+  height: 100vh;
+}
+
+.modal-dialog {
+  margin: 0 !important;
+}

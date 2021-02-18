@@ -19,12 +19,11 @@ import _ from 'lodash';
 import semver from 'semver';
 import os from 'os';
 import { push } from 'connected-react-router';
-
-import sundial from 'sundial';
+import { ipcRenderer } from "electron";
 
 import * as actionTypes from '../constants/actionTypes';
 import * as actionSources from '../constants/actionSources';
-import { pages, pagesMap, paths, steps, urls } from '../constants/otherConstants';
+import { pages, pagesMap, paths } from '../constants/otherConstants';
 import errorText from '../constants/errors';
 import * as metrics from '../constants/metrics';
 
@@ -723,4 +722,18 @@ export function setPage(page, actionSource = actionSources[actionTypes.SET_PAGE]
       dispatch(push({pathname: pagesMap[page], state: { meta }}));
     }
   };
+}
+
+// LibreView Related
+export function libreViewLogin() {
+  const { api } = services
+
+  return (dispatch, getState) => {
+    api.user.libreViewLogin(authTicket => {
+      if (authTicket) {
+        ipcRenderer.send('save-libreview-auth-ticket', { authTicket })
+        dispatch(syncActions.setLoggedInLibreView(true))
+      }
+    })
+  }
 }

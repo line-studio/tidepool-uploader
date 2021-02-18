@@ -15,6 +15,10 @@
 * == BSD2 LICENSE ==
 */
 import Select from 'react-select';
+import reactSelectStyles from '../constants/reactSelectStyles';
+import CustomDropdownIndicator from './CustomDropdownIndicator';
+import CustomOptionClinicSelect from './CustomOptionClinicSelect';
+import CustomSingleValueClinicSelect from './CustomSingleValueClinicSelect';
 
 var _ = require('lodash');
 var React = require('react');
@@ -43,36 +47,8 @@ class ClinicUserSelect extends React.Component {
     }
   };
 
-  handleOnChange = (userId) => {
-    this.props.setTargetUser(userId, {eventName: metrics.CLINIC_SEARCH_SELECTED});
-  };
-
-  valueRenderer = (option) => {
-    var user = _.get(this.props.allUsers, option.value);
-    var name = personUtils.patientFullName(user);
-    var bday = _.get(user, ['patient', 'birthday'], '');
-    var mrn = _.get(user, ['patient', 'mrn'], '');
-
-    var formattedBday;
-    if (bday) {
-      formattedBday = sundial.translateMask(bday, 'YYYY-MM-DD', 'M/D/YYYY');
-    }
-
-    var formattedMrn;
-    if (mrn) {
-      formattedMrn = 'MRN:'+mrn;
-    }
-
-    return (
-      <div className={styles.optionLabelWrapper}>
-        <div className={styles.optionLabelName}>
-          {name} {formattedMrn}
-        </div>
-        <div className={styles.optionLabelBirthday}>
-          {formattedBday}
-        </div>
-      </div>
-    );
+  handleOnChange = (option) => {
+    this.props.setTargetUser(option.value, {eventName: metrics.CLINIC_SEARCH_SELECTED});
   };
 
   renderSelector = () => {
@@ -101,14 +77,18 @@ class ClinicUserSelect extends React.Component {
         name={'uploadTargetSelect'}
         placeholder={'Search'}
         className={styles.Select}
-        clearable={false}
-        simpleValue={true}
-        value={this.props.targetId}
+        isClearable={false}
+        value={selectorOpts.find(opt => opt.value === this.props.targetId)}
         options={selectorOpts}
         matchProp={'label'} //NOTE: we only want to match on the label!
-        optionRenderer={this.valueRenderer}
-        valueRenderer={this.valueRenderer}
+        components={{
+          Option: CustomOptionClinicSelect,
+          SingleValue: CustomSingleValueClinicSelect,
+          DropdownIndicator: CustomDropdownIndicator
+        }}
         onChange={this.handleOnChange}
+        allUsers={allUsers}
+        styles={reactSelectStyles}
       />
     );
   };

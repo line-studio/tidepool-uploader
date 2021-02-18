@@ -7,11 +7,41 @@ import open from 'open';
 import { autoUpdater } from 'electron-updater';
 import * as chromeFinder from 'chrome-launcher/dist/chrome-finder';
 import { sync as syncActions } from './actions';
-import debugMode from '../app/utils/debugMode';
 import Rollbar from 'rollbar/src/server/rollbar';
 import uploadDataPeriod from './utils/uploadDataPeriod';
+import puppeteer from 'puppeteer-extra'
+import pie from 'puppeteer-in-electron'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+import AnonymizeUA from 'puppeteer-extra-plugin-anonymize-ua'
+import scraper from './scraper';
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
+
+scraper.init(app, pie)
+
+ipcMain.on('save-libreview-auth-ticket', (e, { authTicket }) => {
+  scraper.saveLibreViewAuthTicket(authTicket)
+})
+
+ipcMain.handle('search-libreview', async (e, { term }) => {
+  return await scraper.searchPatientsInLibreView(term)
+})
+
+ipcMain.on('scrape-libreview', async (e, { patientId, loggedInUserId, uploadTargetUserId }) => {
+  const data = await scraper.scrapeLibreView(patientId, loggedInUserId, uploadTargetUserId)
+
+  e.reply('scrape-results-libreview', { data })
+})
+
+ipcMain.on('scrape', async ({ site }) => {
+  console.log('Scraping...')
+
+  if (site = 'libreview') {
+    await scraper.libreViewLogin()
+    const patients = await scraper.searchPatientsInLibreView('Habib')
+    await scraper.scrapeLibreView(patients[0].id)
+  }
+})
 
 let rollbar;
 if(process.env.NODE_ENV === 'production') {
@@ -85,6 +115,8 @@ function addDataPeriodGlobalListener(menu) {
 };
 
 app.on('ready', async () => {
+  puppeteer.use(StealthPlugin())
+  puppeteer.use(AnonymizeUA())
   await installExtensions();
   const resizable = (process.env.NODE_ENV === 'development');
 
@@ -97,6 +129,8 @@ app.on('ready', async () => {
       nodeIntegration: true
     }
   });
+
+  scraper.setMainWindow(mainWindow)
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 

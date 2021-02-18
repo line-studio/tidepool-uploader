@@ -840,3 +840,33 @@ export function dismissedAdHocPairingDialog() {
     meta: { source: actionSources[actionTypes.AD_HOC_PAIRING_DISMISSED] }
   };
 }
+
+// Libre View related
+
+export function setLibreViewTargetPatient(patient, metric) {
+  const meta = {source: actionSources[actionTypes.SET_LIBREVIEW_TARGET_PATIENT]};
+ 
+  if (metric) {
+    _.assign(meta, {metric});
+  }
+
+  return {
+    type: actionTypes.SET_LIBREVIEW_TARGET_PATIENT,
+    payload: { patient },
+    meta
+  };
+}
+
+export function setLoggedInLibreView(isLoggedIn, metric) {
+  const meta = {source: actionSources[actionTypes.SET_LOGGED_IN_LIBREVIEW]};
+
+  if (metric) {
+    _.assign(meta, {metric});
+  }
+
+  return {
+    type: actionTypes.SET_LOGGED_IN_LIBREVIEW,
+    payload: { isLoggedIn },
+    meta
+  };
+}

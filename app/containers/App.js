@@ -59,8 +59,10 @@ import UpdateModal from '../components/UpdateModal';
 import UpdateDriverModal from '../components/UpdateDriverModal';
 import DeviceTimeModal from '../components/DeviceTimeModal';
 import AdHocModal from '../components/AdHocModal';
+import LibreViewPatientSelectPage from './LibreViewPatientSelectPage'
 
 import styles from '../../styles/components/App.module.less';
+import LibreViewScrapePage from './LibreViewScrapePage';
 
 const serverdata = {
   Local: {
@@ -176,6 +178,8 @@ export class App extends Component {
           <Route path="/clinic_user_select" component={ClinicUserSelectPage}/>
           <Route path="/clinic_user_edit" component={ClinicUserEditPage}/>
           <Route path="/no_upload_targets" component={NoUploadTargetsPage}/>
+          <Route path="/libreview_patient_select" component={LibreViewPatientSelectPage} />
+          <Route path="/libreview_patient_data_scrape" component={LibreViewScrapePage} />
         </Switch>
         <Footer version={config.version} environment={this.state.server} />
         {/* VersionCheck as overlay */}
