@@ -34,11 +34,12 @@ class LibreViewPatientSelectPage extends Component {
     super(props)
 
     this.state = {
-      doneScraping: false,
       captchaSolved: false
     }
 
     const { libreViewTargetPatient, loggedInUser, uploadTargetUser } = props
+
+    props.sync.setDoneScraping(false)
 
     ipcRenderer.send('scrape-libreview', {
       patientId: libreViewTargetPatient.id,
@@ -46,10 +47,9 @@ class LibreViewPatientSelectPage extends Component {
       uploadTargetUserId: uploadTargetUser
     })
 
-    ipcRenderer.on('scrape-results-libreview', (e, args) => {
-      console.log(args.data)
+    ipcRenderer.on('scrape-results-libreview', (e, { data }) => {
+      props.async.uploadScrapedData(data)
       this.setState({
-        doneScraping: true,
         captchaSolved: this.state.captchaSolved
       })
     })
@@ -83,6 +83,8 @@ class LibreViewPatientSelectPage extends Component {
   }
 
   render () {
+    const { doneScraping } = this.props
+
     return (
       <div className={styles.mainContainer}>
         <div className={styles.contentWrapper}>
@@ -95,7 +97,7 @@ class LibreViewPatientSelectPage extends Component {
               </p>
               {this.renderLoading()}
             </>
-          ) : !this.state.doneScraping ? (
+          ) : !doneScraping ? (
             <p>
               Fetching data from LibreView account
               <FontAwesomeIcon
@@ -118,10 +120,10 @@ class LibreViewPatientSelectPage extends Component {
         <div
           className={styles.buttonsContainer}
           style={{
-            flexDirection: this.state.doneScraping ? 'row-reverse' : 'row'
+            flexDirection: doneScraping ? 'row-reverse' : 'row'
           }}
         >
-          {!this.state.doneScraping && (
+          {!doneScraping && (
             <button className={styles.backButton} onClick={this.handleGoBack}>
               Go Back
             </button>
@@ -130,7 +132,7 @@ class LibreViewPatientSelectPage extends Component {
           <button
             className={styles.doneButton}
             onClick={this.handleDoneClick}
-            disabled={!this.state.doneScraping}
+            disabled={!doneScraping}
           >
             Done
           </button>
@@ -145,7 +147,8 @@ export default connect(
     return {
       libreViewTargetPatient: state.libreViewTargetPatient,
       loggedInUser: state.loggedInUser,
-      uploadTargetUser: state.uploadTargetUser
+      uploadTargetUser: state.uploadTargetUser,
+      doneScraping: state.doneScraping
     }
   },
   dispatch => {

@@ -870,3 +870,17 @@ export function setLoggedInLibreView(isLoggedIn, metric) {
     meta
   };
 }
+
+export function setDoneScraping(isDoneScraping, metric) {
+  const meta = {source: actionSources[actionTypes.SET_DONE_SCRAPING]};
+
+  if (metric) {
+    _.assign(meta, {metric});
+  }
+
+  return {
+    type: actionTypes.SET_DONE_SCRAPING,
+    payload: { isDoneScraping },
+    meta
+  };
+}

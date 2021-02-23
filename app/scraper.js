@@ -160,7 +160,7 @@ async function scrapeLibreView (patientId, byUser, userId) {
     uploadId,
     deviceId,
     time: now,
-    computerTime: now.replace('Z', ''),
+    computerTime: now.split('.')[0],
     timezone: 'Europe/Copenhagen',
     version: '2.34.1',
     byUser,

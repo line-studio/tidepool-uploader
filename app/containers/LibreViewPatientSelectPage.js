@@ -28,9 +28,9 @@ class LibreViewPatientSelectPage extends Component {
   }
 
   handleClickNext = () => {
-    const { setPage } = this.props.async
+    const { saveLibreViewPatientIdInProfile } = this.props.async
 
-    setPage(pages.LIBREVIEW_PATIENT_DATA_SCRAPE, null, null)
+    saveLibreViewPatientIdInProfile()
   }
 
   handlePatientSelect = patient => {

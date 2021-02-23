@@ -19,3 +19,13 @@ export function loggedInLibreView (state = null, action) {
       return state
   }
 }
+
+export function doneScraping(state = null, action) {
+  switch (action.type) {
+    case actionTypes.SET_DONE_SCRAPING:
+      const { isDoneScraping } = action.payload
+      return isDoneScraping
+    default:
+      return state
+  }
+}

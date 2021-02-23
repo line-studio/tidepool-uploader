@@ -737,3 +737,43 @@ export function libreViewLogin() {
     })
   }
 }
+
+export function uploadScrapedData(data) {
+  const { api } = services
+
+  return (dispatch, getState) => {
+    const { uploadTargetUser } = getState() 
+
+    api.user.uploadScrapedData(uploadTargetUser, data.slice(0, 1000), (res) => {
+      dispatch(syncActions.setDoneScraping(true))
+    })
+  }
+}
+
+export function saveLibreViewPatientIdInProfile() {
+  return (dispatch, getState) => {
+    const { allUsers, libreViewTargetPatient, uploadTargetUser } = getState();
+    const { api } = services;
+
+    dispatch(syncActions.updateProfileRequest());
+
+    let updates = {
+      libreViewPatientId: libreViewTargetPatient.id
+    }
+
+    api.user.updateProfile(uploadTargetUser, updates, (err, profile) => {
+      if (err){
+        if (_.get(err,'status') !== 401) {
+          dispatch(syncActions.updateProfileFailure(err));
+        } else {
+          let newProfile = actionUtils.mergeProfileUpdates(allUsers[uploadTargetUser], updates);
+          dispatch(syncActions.updateProfileSuccess(newProfile, uploadTargetUser));
+          dispatch(setPage(pages.LIBREVIEW_PATIENT_DATA_SCRAPE, undefined, undefined));
+        }
+      } else {
+        dispatch(syncActions.updateProfileSuccess(profile, uploadTargetUser));
+        dispatch(setPage(pages.LIBREVIEW_PATIENT_DATA_SCRAPE, undefined, undefined));
+      }
+    });
+  };
+}
