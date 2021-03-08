@@ -30,10 +30,10 @@ jobs:
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
     env:
-      API_URL: 'https://dev-us.tdpl.dk'
-      UPLOAD_URL: 'https://dev-us.tdpl.dk'
-      DATA_URL: 'https://dev-us.tdpl.dk/dataservices'
-      BLIP_URL: 'https://dev-us.tdpl.dk'
+      API_URL: 'https://steno.tdpl.dk'
+      UPLOAD_URL: 'https://steno.tdpl.dk'
+      DATA_URL: 'https://steno.tdpl.dk/dataservices'
+      BLIP_URL: 'https://steno.tdpl.dk'
       DEFAULT_TIMEZONE: 'Europe/Copenhagen'
       DEBUG_ERROR: false
       REDUX_LOG: false
